@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Document</title>
+ <style>
+  *{
+   padding: 0px;
+   margin: 0px;
+   box-sizing: border-box;
+  }
+img{
+ height: 200px;
+ width: 200px;
+}
+body{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ height: 100vh;
+ background-color: rgb(152, 72, 152);
+}
+.main{
+ margin: 50px 0px;
+ border: 2px solid;
+ width: 300px;
+ background-color: aqua;
+ margin-top: 300px;
+ text-align: center;
+ padding:50px 40px ;
+}
+button{
+ height: 50px;
+ width: 150px;
+ padding: 10px;
+ margin-bottom:20px ;
+ background-color: rgb(73, 73, 192);
+}
+
+input{
+ height: 40px;
+ width: 150px;
+ background-color: blanchedalmond;
+ color: red;
+ margin: 20px;
+}
+#atmpts{
+ text-align: start;
+ margin-left: 20px;
+ color: red;
+}
+#lastno{
+ text-align: start;
+ margin-left: 23px;
+ color: red;
+}
+#gamearea{
+  height: 250px;
+
+}
+
+ </style>
+</head>
+<body onload="onload()">
+ <section class="main">
+ <div class="firstscreen"  id="firstscreen">
+ <p>guess the random no between 1-100</p>
+ <img src="http://guessthenumbergame.thapaonlineclass.com/images/game.svg" alt="">
+
+ <P>slect the diffeculty</P>
+ <button id="easy">easy:10 atempts</button> <br>
+ <button id="hard">hard: 5min</button>
+</div>
+
+<div id="gamearea">
+ <button id="newgame" >NEW GAME</button>
+ <h1 id="guessno">youre guess</h1>
+ <section>
+ <input type="number" id="input" min="1" max="100" placeholder="enter youre no" onchange="compare()" >
+ <p>number of previou attempts</p>
+ <p id="atmpts">-</p>
+ <p>number of previous guess</p>
+ <p id="lastno">-</p>
+</section>
+</div>
+</section>
+
+
+<script>
+  let userguess=[];
+  let random;
+  
+  let gues=document.getElementById("guessno")
+  chnage=document.getElementById("input")
+function onload(){
+  random=Math.floor(Math.random()*100)
+ console.log(random)
+ document.getElementById("newgame").style.display="none"
+document.getElementById("gamearea").style.display="none"
+}
+ function startgame(){
+  document.getElementById("firstscreen").style.display="none"
+document.getElementById("gamearea").style.display="block"
+ }
+ function startnewgame(){
+  document.getElementById("newgame").style.display="block"
+  document.getElementById("input").setAttribute("disabled",true)
+  
+ }
+ document.getElementById('newgame').addEventListener("click", function(){
+  location.reload();
+ })
+
+
+// main app
+function compare(){
+   let ip=document.getElementById("input").value
+   console.log(ip);
+     userguess=[...userguess,ip]
+     document.getElementById("atmpts").innerHTML=userguess.length
+   document.getElementById("lastno").innerHTML=userguess;
+   
+
+   // check value
+ 
+   if(userguess.length < maxguess){
+   if(ip > random){ gues.innerHTML="youre guess is high"
+   chnage.value=""
+  }
+   else if(ip == random){gues.innerHTML='youre  won';
+   
+  }
+   else{gues.innerHTML="you gues small"
+   chnage.value="";
+  
+  } 
+}
+else{
+  if(ip > random)
+  { gues.innerHTML=`you lose game correct ans is ${random}`
+   startnewgame()
+   
+   
+  }
+   else if(ip == random)
+   {gues.innerHTML='youre  won';
+   startnewgame()
+  }
+   else
+   {gues.innerHTML=`you lose game corect ans is ${random} `
+   startnewgame()
+  
+  } 
+}
+
+   
+}
+
+
+
+let easy=document.getElementById("easy")
+easy.addEventListener("click",()=>{
+  maxguess=5;
+  startgame()
+  sound=new Audio("./songs/1.mp3") 
+  sound.play()
+})
+
+let hard=document.getElementById("hard")
+hard.addEventListener("click",()=>{
+  sound=new Audio("./songs/3.mp3")
+  sound.play();
+  maxguess=10;
+  startgame()
+})
+ 
+</script>
+</body>
+</html>
